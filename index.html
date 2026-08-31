@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Der Eiswagen — Serving Cold Beats</title>
+    <meta name="description" content="Der Eiswagen bringt kühle Beats direkt auf die Straße. Finde unsere nächsten Tour-Termine und höre unsere DJ-Sets.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,400;1,700&family=Poiret+One&family=Poor+Story&family=Reenie+Beanie&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Repeating vertical stripes background -->
+    <div class="stripe-bg"></div>
+
+    <div class="app-wrapper">
+        <main class="eiswagen-container" id="main-container">
+
+            <!-- Top Gradient Overlay (in front of hero image, behind logo/nav overlays) -->
+            <div class="top-gradient-overlay"></div>
+
+            <!-- Hero image (hidden — used via CSS background-image) -->
+            <img src="images/hero.png" alt="Der Eiswagen DJ Booth" class="cart-image">
+
+            <!-- OVERLAY 1: Top-Left Neon Logo -->
+            <header class="neon-header-overlay">
+                <div class="neon-logo-container">
+                    <img src="images/logo.svg" alt="Der Eiswagen" class="neon-logo-svg">
+                </div>
+                <span class="neon-subtitle">serving cold beats</span>
+            </header>
+
+            <!-- OVERLAY 2: Top-Right Navigation -->
+            <nav class="nav-overlay">
+                <a href="https://t.me/dereiswagen" target="_blank" rel="noopener noreferrer"
+                   class="nav-icon-link" aria-label="Telegram" id="btn-telegram">
+                    <svg viewBox="0 0 24 24" class="nav-icon">
+                        <path fill="currentColor" d="M9.78 18.65l.28-4.24 7.68-6.92c.33-.29-.07-.45-.51-.16L7.67 13.52l-4.12-1.28c-.9-.28-.92-.9.19-1.33L19.8 4.4c.74-.28 1.38.16 1.14 1.19l-2.73 12.85c-.2 1-.8 1.25-1.64.78l-4.2-3.1-2.02 1.95c-.23.23-.42.42-.87.42z"/>
+                    </svg>
+                </a>
+                <a href="https://instagram.com/dereiswagen" target="_blank" rel="noopener noreferrer"
+                   class="nav-icon-link" aria-label="Instagram" id="btn-instagram">
+                    <svg viewBox="0 0 24 24" class="nav-icon">
+                        <path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                    </svg>
+                </a>
+                <button class="menu-button" id="menu-toggle" aria-label="Menü öffnen">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </nav>
+
+            <!-- OVERLAY 3: Sign Whiteboard (Bottom-Right, on top of sign.svg) -->
+            <section class="whiteboard-overlay" id="whiteboard" style="background-image: url('images/sign.png')">
+                <!-- Sign header -->
+                <div class="whiteboard-header">
+                    <span class="wb-logo-text">Der Eiswagen</span>
+                    <div class="wb-icecream-icon">
+                        <!-- Ice cream cone doodle -->
+                        <svg viewBox="0 0 40 60" class="icecream-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Cone -->
+                            <path d="M14 30 L20 56 L26 30 Z" stroke="#b5855a" stroke-width="1.5" fill="#f3d08e"/>
+                            <!-- Scoop -->
+                            <circle cx="20" cy="22" r="9" stroke="#e08080" stroke-width="1.5" fill="#f9c5c5"/>
+                            <!-- Highlight -->
+                            <path d="M14 20 Q16 16 20 16" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="whiteboard-body">
+                    <p class="wb-label">next up:</p>
+                    <div class="wb-time-bubble">
+                        <span class="wb-time" id="event-time">15:00. - 16:00</span>
+                    </div>
+                    <h2 class="wb-event-title" id="event-title">Guerilla Cypher</h2>
+                    <a href="https://maps.google.com/?q=Brudermuehlbruecke+Muenchen"
+                       target="_blank" rel="noopener noreferrer"
+                       class="wb-location" id="event-location">
+                        Brudermühlbrücke
+                        <svg viewBox="0 0 24 24" class="location-pin">
+                            <path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+        <!-- Vintage Ice Cream Parlor Menu Drawer -->
+    <div class="sidebar-drawer vintage-parlor-drawer" id="sidebar-menu">
+                <button class="close-drawer" id="close-menu" aria-label="Menü schließen">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        
+        <div class="drawer-inner-frame">
+            <!-- Vintage Header with Ice Cream Emblem & Badges -->
+            <div class="vintage-menu-top">
+                <div class="vintage-badges-row">
+                    <div class="vintage-badge">
+                        <span>100%</span>
+                        <small>COOL</small>
+                    </div>
+                    <div class="vintage-icecream-emblem">
+                        <svg viewBox="0 0 100 140" class="vintage-cone-svg">
+                            <path d="M50 8 C40 8 36 20 44 26 C34 26 28 38 36 46 C24 46 18 64 30 76 C20 78 18 90 28 98 C36 104 64 104 72 98 C82 90 80 78 70 76 C82 64 76 46 64 46 C72 38 66 26 56 26 C64 20 60 8 50 8 Z" fill="#fcf6e8" stroke="#3a281c" stroke-width="3.5" stroke-linejoin="round"/>
+                            <path d="M42 26 C46 36 54 36 58 26" stroke="#3a281c" stroke-width="2.5" fill="none"/>
+                            <path d="M34 46 C44 58 56 58 66 46" stroke="#3a281c" stroke-width="2.5" fill="none"/>
+                            <path d="M28 74 C40 88 60 88 72 74" stroke="#3a281c" stroke-width="2.5" fill="none"/>
+                            <path d="M36 78 C36 88 40 92 42 84" stroke="#3a281c" stroke-width="2" fill="#fcf6e8"/>
+                            <path d="M26 98 L50 136 L74 98 Z" fill="#e8c896" stroke="#3a281c" stroke-width="3.5" stroke-linejoin="round"/>
+                            <path d="M32 106 L68 106 M38 116 L62 116 M44 126 L56 126" stroke="#3a281c" stroke-width="2"/>
+                            <path d="M30 100 L62 130 M42 98 L68 120 M70 100 L38 130 M58 98 L32 120" stroke="#3a281c" stroke-width="1.8"/>
+                        </svg>
+                    </div>
+                    <div class="vintage-badge">
+                        <span>LIVE</span>
+                        <small>BEATS</small>
+                    </div>
+                </div>
+
+                <div class="vintage-typography-header">
+                    <h2 class="vintage-main-title">Ice Cream</h2>
+                    <h3 class="vintage-sub-title">Menu</h3>
+                    <div class="vintage-stars-banner">
+                        <span class="star-line">★★★★★</span>
+                        <span class="banner-pill">ALWAYS FRESH</span>
+                        <span class="star-line">★★★★★</span>
+                    </div>
+                </div>
+            </div>
+
+                        <!-- Vintage Navigation -->
+            <nav class="drawer-nav vintage-nav">
+                <ul>
+                    <li><button class="nav-item active" data-section="about">Über uns</button></li>
+                    <li><button class="nav-item" data-section="tour">Tour-Daten</button></li>
+                    <li><button class="nav-item" data-section="booking">Buchen / Kontakt</button></li>
+                </ul>
+            </nav>
+
+            <div class="vintage-ornament-divider">
+                <span class="ornament-diamond">◆</span>
+            </div>
+
+            <div class="drawer-section-display">
+                                                <!-- About (Selected by default) -->
+                <section class="menu-section active-section" id="section-about">
+                    <h4 class="vintage-section-heading">Über Der Eiswagen</h4>
+                    <div class="vintage-about-card">
+                        <p>Wer sagt, dass ein Eiswagen nur Eis verkaufen darf? Wir haben unseren traditionellen Eiswagen in eine mobile DJ-Kabine umgebaut — ausgestattet mit Turntables, Lautsprechern und bestem handgemachtem Eis.</p>
+                        <p>Wir touren durch München und servieren die coolsten Beats und erfrischendsten Flavours der Stadt.</p>
+                        
+                        <div class="vintage-social-box">
+                            <span class="social-box-title">Folge uns:</span>
+                            <div class="vintage-social-links">
+                                <a href="https://instagram.com/dereiswagen" target="_blank" rel="noopener noreferrer" class="vintage-social-btn" aria-label="Instagram">
+                                    <svg viewBox="0 0 24 24" class="social-btn-icon"><path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                                    <span>Instagram</span>
+                                </a>
+                                <a href="https://t.me/dereiswagen" target="_blank" rel="noopener noreferrer" class="vintage-social-btn" aria-label="Telegram">
+                                    <svg viewBox="0 0 24 24" class="social-btn-icon"><path fill="currentColor" d="M9.78 18.65l.28-4.24 7.68-6.92c.33-.29-.07-.45-.51-.16L7.67 13.52l-4.12-1.28c-.9-.28-.92-.9.19-1.33L19.8 4.4c.74-.28 1.38.16 1.14 1.19l-2.73 12.85c-.2 1-.8 1.25-1.64.78l-4.2-3.1-2.02 1.95c-.23.23-.42.42-.87.42z"/></svg>
+                                    <span>Telegram</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tour Dates -->
+                <section class="menu-section" id="section-tour">
+                    <h4 class="vintage-section-heading">Kommende Stopps</h4>
+                    <ul class="vintage-menu-list">
+                        <li class="vintage-menu-row current-stop">
+                            <div class="row-left">
+                                <span class="row-tag">HEUTE</span>
+                                <span class="row-title">Brudermühlbrücke</span>
+                                <small class="row-desc">Guerilla Cypher (Live DJ Set &amp; Eis)</small>
+                            </div>
+                            <div class="row-dots"></div>
+                            <div class="row-price">15:00 - 16:00</div>
+                        </li>
+                        <li class="vintage-menu-row">
+                            <div class="row-left">
+                                <span class="row-tag">MORGEN</span>
+                                <span class="row-title">Isarauen</span>
+                                <small class="row-desc">Sunset Sessions (Reichenbachbrücke)</small>
+                            </div>
+                            <div class="row-dots"></div>
+                            <div class="row-price">18:00 - 21:00</div>
+                        </li>
+                        <li class="vintage-menu-row">
+                            <div class="row-left">
+                                <span class="row-tag">SAMSTAG</span>
+                                <span class="row-title">Flaucher</span>
+                                <small class="row-desc">Chill &amp; Ice Cream Bash</small>
+                            </div>
+                            <div class="row-dots"></div>
+                            <div class="row-price">14:00 - 18:00</div>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Booking -->
+                <section class="menu-section" id="section-booking">
+                    <h4 class="vintage-section-heading">Hol uns zu deinem Event</h4>
+                    <p class="vintage-section-sub">Für Firmenfeiern, Street Festivals &amp; Partys.</p>
+                    <form class="contact-form vintage-form" id="booking-form">
+                        <div class="form-group">
+                            <label for="name">Dein Name</label>
+                            <input type="text" id="name" required placeholder="z.B. DJ Vanille">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mail Adresse</label>
+                            <input type="email" id="email" required placeholder="z.B. scoop@coldbeats.de">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Event-Details</label>
+                            <textarea id="message" required rows="2" placeholder="Datum, Ort, Gäste..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-form-btn vintage-submit-btn">Anfrage abschicken</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast-message"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

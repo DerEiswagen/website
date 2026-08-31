@@ -1,0 +1,953 @@
+/*
+ * Der Eiswagen — Serving Cold Beats
+ * Complete stylesheet rebuilt to match design reference
+ */
+
+/* ==========================================
+   1. Reset & Variables
+   ========================================== */
+:root {
+    --neon-pink: #e800a0;
+    --neon-pink-glow: rgba(232, 0, 160, 0.7);
+    --neon-pink-light: #ff55c8;
+    --stripe-cyan: #D0ECE9;
+    --stripe-white: #ffffff;
+    --text-dark: #222;
+    --text-blue: #2255cc;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    overflow: hidden !important; /* strictly full-viewport single page, no vertical scrolling */
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: #ddf2f2;
+    touch-action: none;
+}
+
+/* ==========================================
+   2. Striped Background
+   ========================================== */
+.stripe-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--stripe-white)   0px,
+        var(--stripe-white)   35px,
+        var(--stripe-cyan)    35px,
+        var(--stripe-cyan)    57px
+    );
+}
+
+/* Top gradient overlay — above stripes & hero, behind nav/logo/subtitle */
+.top-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 25%;
+    z-index: 2;
+    background: linear-gradient(
+        to bottom,
+        #71817E 0%,
+        rgba(208, 222, 206, 0) 100%
+    );
+    pointer-events: none;
+}
+
+/* ==========================================
+   3. Full-Viewport Hero Layout
+   ========================================== */
+.app-wrapper {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.eiswagen-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    background-image: url('images/hero.png');
+    background-size: auto 120vh;
+    background-repeat: no-repeat;
+    background-position: 50% bottom;
+    overflow: hidden;
+}
+
+/* Hide the <img> tag version — we use CSS background instead for better control */
+.cart-image {
+    display: none;
+}
+
+/* ==========================================
+   4. Top-Left Neon Logo Header
+   ========================================== */
+.neon-header-overlay {
+    position: absolute;
+    top: 3%;
+    left: 2%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    pointer-events: none;
+}
+
+.neon-logo-container {
+    transform: rotate(-6deg);
+    transform-origin: left center;
+}
+
+.neon-logo-svg {
+    width: clamp(140px, 19vw, 310px);
+    height: auto;
+    filter:
+        drop-shadow(0 0 3px #fff)
+        drop-shadow(0 0 12px var(--neon-pink-light))
+        drop-shadow(0 0 25px var(--neon-pink))
+        drop-shadow(0 0 50px var(--neon-pink));
+    animation: neon-svg-pulse 6s ease-in-out infinite alternate,
+               neon-flicker 12s linear infinite;
+}
+
+.neon-subtitle {
+    font-family: 'Poiret One', sans-serif;
+    font-size: clamp(18px, 2.3vw, 36px);
+    font-weight: 400;
+    color: #ffffff;
+    -webkit-text-stroke: 4.5px #DB93D6;
+    paint-order: stroke fill;
+    margin-top: -6px;
+    transform: rotate(-14deg) translateX(8%);
+    transform-origin: left center;
+    text-shadow:
+        0 0 6px rgba(219, 147, 214, 0.5),
+        0 0 14px rgba(219, 147, 214, 0.3);
+    animation: neon-subtitle-pulse 6s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+/* Neon animations */
+@keyframes neon-svg-pulse {
+    0% {
+        filter:
+            drop-shadow(0 0 4px rgba(255,255,255,0.9))
+            drop-shadow(0 0 10px rgba(232, 0, 160, 0.5))
+            drop-shadow(0 0 20px rgba(232, 0, 160, 0.35))
+            drop-shadow(0 0 40px rgba(232, 0, 160, 0.2));
+    }
+    100% {
+        filter:
+            drop-shadow(0 0 6px rgba(255,255,255,1))
+            drop-shadow(0 0 16px rgba(232, 0, 160, 0.7))
+            drop-shadow(0 0 32px rgba(232, 0, 160, 0.5))
+            drop-shadow(0 0 60px rgba(232, 0, 160, 0.3));
+    }
+}
+
+@keyframes neon-subtitle-pulse {
+    0% { text-shadow: 0 0 4px rgba(219,147,214,0.3), 0 0 10px rgba(219,147,214,0.2); }
+    100% { text-shadow: 0 0 8px rgba(219,147,214,0.6), 0 0 18px rgba(219,147,214,0.4), 0 0 30px rgba(219,147,214,0.2); }
+}
+
+@keyframes neon-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+    20%, 24%, 55% { opacity: 0.9; }
+}
+
+/* ==========================================
+   5. Top-Right Navigation
+   ========================================== */
+.nav-overlay {
+    position: absolute;
+    top: 4%;
+    right: 2.5%;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 1.5vw, 24px);
+}
+
+.nav-icon-link {
+    width: clamp(36px, 4vw, 60px);
+    height: clamp(36px, 4vw, 60px);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nav-icon-link:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+}
+
+.nav-icon {
+    width: 52%;
+    height: 52%;
+}
+
+/* Hamburger */
+.menu-button {
+    width: clamp(36px, 4vw, 60px);
+    height: clamp(36px, 4vw, 60px);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.88);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.menu-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+}
+
+.bar {
+    width: 45%;
+    height: 2.5px;
+    background-color: #333;
+    border-radius: 2px;
+    display: block;
+}
+
+/* ==========================================
+   6. Sign / Whiteboard Overlay (Bottom-Right)
+   The sign.svg is the background frame for this card.
+   Text is overlaid on top of it.
+   ========================================== */
+.whiteboard-overlay {
+    position: absolute;
+    /* Lean sign against cart's bottom-right */
+    bottom: -2vh;
+    left: calc(50% + 10vh);
+    z-index: 9;
+
+    background-image: url('images/sign.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+
+    /* Scaled proportionally with the 120vh cart height */
+    height: 40vh;
+    width: calc(40vh * 492 / 617);
+    min-height: 200px;
+    min-width: 159px;
+
+    border: none;
+    box-shadow: none;
+
+    transform-origin: bottom center;
+
+    padding: 0;
+    display: block;
+    pointer-events: auto;
+}
+
+/* The whiteboard header (logo text + ice cream) is already
+   drawn inside sign.svg, so we hide it */
+.whiteboard-header {
+    display: none;
+}
+
+/* Text body: positioned right below the header & next to ice cream doodle */
+.whiteboard-body {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 36%;
+    bottom: 6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0px;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+.wb-label {
+    font-family: 'Poor Story', cursive;
+    font-size: clamp(16px, 2.7vh, 25px);
+    color: #2f2934;
+    font-weight: 400;
+    align-self: flex-end;
+    margin-right: 14%;
+    margin-bottom: 2px;
+}
+
+.wb-time-bubble {
+    align-self: flex-end;
+    margin-right: 8%;
+    margin-bottom: 0px;
+}
+
+.wb-time {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: clamp(16px, 2.6vh, 28px);
+    color: #2f2934;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.wb-event-title {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: clamp(22px, 3.8vh, 40px);
+    color: #2f2934;
+    font-weight: 600;
+    line-height: 1.1;
+    align-self: center;
+    margin-left: 10%;
+    transform: rotate(-1.5deg);
+}
+
+.wb-location {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: clamp(18px, 3.2vh, 34px);
+    color: #2f2934;
+    text-decoration: none;
+    align-self: center;
+    margin-left: 16%;
+    transform: rotate(-1.5deg);
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.wb-location:hover {
+    color: var(--neon-pink);
+}
+
+.location-pin {
+    display: none; /* Reference image has clean handwritten text */
+}
+
+/* Countdown — hidden in the main board since not in design */
+.countdown-container {
+    display: none;
+}
+
+/* Music player — hidden in main overlay, accessible from menu */
+.music-player-bar {
+    display: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================
+   7. Vintage Ice Cream Parlor Menu Drawer
+   ========================================== */
+.sidebar-drawer.vintage-parlor-drawer {
+    position: fixed;
+    top: 0;
+    right: -520px;
+    width: min(470px, 95vw);
+    height: 100vh;
+    background: #eaf6f4;
+    background-image: 
+        radial-gradient(#c6e8e4 12%, transparent 13%),
+        radial-gradient(#c6e8e4 12%, transparent 13%);
+    background-size: 16px 16px;
+    background-position: 0 0, 8px 8px;
+    color: #2f2934;
+    border-left: none;
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.28);
+    z-index: 100;
+    transition: right 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 20px 16px;
+    overflow-y: auto;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.sidebar-drawer.open {
+    right: 0;
+}
+
+.drawer-inner-frame {
+    border: 2px solid #2f2934;
+    border-radius: 8px;
+    padding: 20px 18px;
+    background: #ffffff;
+    box-shadow: inset 0 0 0 3px #ffffff, inset 0 0 0 5px #bde4e0;
+    min-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+}
+
+.close-drawer {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    background: #2f2934;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.close-drawer svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+}
+
+.close-drawer:hover {
+    background: #e800a0;
+    border-color: #e800a0;
+    color: #fff;
+    transform: rotate(90deg);
+}
+
+/* Vintage Header */
+.vintage-menu-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.vintage-badges-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.vintage-badge {
+    width: 44px;
+    height: 44px;
+    background: #2f2934;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #2f2934;
+    transform: rotate(-6deg);
+}
+
+.vintage-badges-row .vintage-badge:last-child {
+    transform: rotate(6deg);
+}
+
+.vintage-badge span {
+    font-family: 'Abril Fatface', serif;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 700;
+}
+
+.vintage-badge small {
+    font-family: 'Inter', sans-serif;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.vintage-icecream-emblem {
+    width: 58px;
+    height: 82px;
+}
+
+.vintage-cone-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 2px 4px rgba(47, 41, 52, 0.12));
+}
+
+.vintage-typography-header {
+    text-align: center;
+}
+
+.vintage-main-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 900;
+    font-size: clamp(32px, 5vw, 42px);
+    color: #2f2934;
+    line-height: 0.95;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.vintage-sub-title {
+    font-family: 'Abril Fatface', Georgia, serif;
+    font-size: clamp(24px, 4vw, 32px);
+    color: #2f2934;
+    margin: 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.vintage-stars-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.star-line {
+    font-size: 9px;
+    color: #2f2934;
+    letter-spacing: 2px;
+}
+
+.banner-pill {
+    background: #a3639e;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+
+/* Vintage Navigation Tabs */
+.vintage-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+    border-top: 1px dashed #bde4e0;
+    border-bottom: 1px dashed #bde4e0;
+    padding: 8px 0;
+}
+
+.vintage-nav .nav-item {
+    background: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #554e5a;
+    cursor: pointer;
+    padding: 6px 10px;
+    transition: all 0.2s;
+    border-radius: 6px;
+}
+
+.vintage-nav .nav-item:hover {
+    color: #2f2934;
+    background: #eef8f7;
+}
+
+.vintage-nav .nav-item.active {
+    background: #2f2934;
+    color: #ffffff;
+}
+
+.vintage-nav .nav-item::after {
+    display: none;
+}
+
+.vintage-ornament-divider {
+    text-align: center;
+    margin: 10px 0 12px;
+    color: #2f2934;
+    font-size: 10px;
+}
+
+/* Submenu Display & Tab Switching */
+.drawer-section-display {
+    flex-grow: 1;
+    margin-top: 4px;
+}
+
+.menu-section {
+    display: none !important;
+}
+
+.menu-section.active-section {
+    display: block !important;
+    animation: fadeInMenu 0.3s ease-out forwards;
+}
+
+@keyframes fadeInMenu {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.vintage-section-heading {
+    font-family: 'Abril Fatface', serif;
+    font-size: 18px;
+    color: #2f2934;
+    text-align: center;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.vintage-section-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #665f6b;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+/* Vintage Tour Menu Rows */
+.vintage-menu-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vintage-menu-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    background: #f7fdfc;
+    border: 1px solid #e1f3f1;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.vintage-menu-row:hover {
+    background: #eef9f8;
+}
+
+.vintage-menu-row.current-stop {
+    background: rgba(55, 156, 146, 0.05);
+    border: 1px solid rgba(55, 156, 146, 0.3);
+    border-left: 4px solid #379c92;
+}
+
+.row-left {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    max-width: 60%;
+}
+
+.row-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    color: #379c92;
+    letter-spacing: 0.5px;
+}
+
+.row-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2f2934;
+    line-height: 1.3;
+}
+
+.row-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    color: #6b6470;
+    margin-top: 2px;
+}
+
+.row-dots {
+    flex-grow: 1;
+    border-bottom: 2px dotted #a8d7d2;
+    margin: 0 10px;
+    min-width: 15px;
+}
+
+.row-price {
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #2f2934;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* About Card */
+.vintage-about-card {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.88;
+    letter-spacing: 0.01em;
+    color: #3b3440;
+    padding: 6px 4px;
+}
+
+.vintage-about-card p {
+    margin-bottom: 14px;
+}
+
+/* Booking Form */
+.vintage-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 6px;
+    width: 100%;
+}
+
+.vintage-form .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: 100%;
+}
+
+.vintage-form .form-group label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #2f2934;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.vintage-form input,
+.vintage-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: #f7fdfc;
+    border: 1.5px solid #bde4e0;
+    border-radius: 6px;
+    color: #2f2934;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    padding: 10px 12px;
+    transition: all 0.2s;
+}
+
+.vintage-form textarea {
+    min-height: 85px;
+    resize: vertical;
+}
+
+.vintage-form input:focus,
+.vintage-form textarea:focus {
+    outline: none;
+    border-color: #e800a0;
+    box-shadow: 0 0 0 3px rgba(232, 0, 160, 0.15);
+    background: #ffffff;
+}
+
+.vintage-submit-btn {
+    width: 100%;
+    background: #2f2934;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+}
+
+.vintage-submit-btn:hover {
+    background: #e800a0;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(232, 0, 160, 0.3);
+}
+
+
+/* Vintage Social Links in About Card */
+.vintage-social-box {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed #bde4e0;
+}
+
+.social-box-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #554e5a;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.vintage-social-links {
+    display: flex;
+    gap: 10px;
+}
+
+.vintage-social-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #f7fdfc;
+    border: 1.5px solid #bde4e0;
+    border-radius: 8px;
+    color: #2f2934;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.vintage-social-btn:hover {
+    background: #2f2934;
+    border-color: #2f2934;
+    color: #ffffff;
+}
+
+.social-btn-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* ==========================================
+   8. Toast Notification
+   ========================================== */
+.toast {
+    position: fixed;
+    bottom: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: #fff;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 200;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    transition: bottom 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    white-space: nowrap;
+}
+
+.toast.show { bottom: 28px; }
+
+/* ==========================================
+   9. Responsive — Mobile
+   ========================================== */
+@media (max-width: 640px) {
+    html,
+    body {
+        overflow: hidden !important;
+        position: fixed;
+    }
+
+    /* Hide top bar social icons so logo has space */
+    #btn-telegram,
+    #btn-instagram {
+        display: none !important;
+    }
+
+    .nav-overlay {
+        top: 18px;
+        right: 18px;
+        gap: 0;
+    }
+
+    /* Logo & subtitle nicely positioned in top-left */
+    .neon-header-overlay {
+        top: 18px;
+        left: 18px;
+        max-width: 78vw;
+    }
+
+    .neon-logo-svg {
+        width: clamp(160px, 56vw, 240px);
+    }
+
+    .neon-subtitle {
+        font-size: clamp(22px, 6.8vw, 34px) !important;
+        -webkit-text-stroke: 4.2px #DB93D6 !important;
+        margin-top: -2px;
+        transform: rotate(-14deg) translateX(6%);
+    }
+
+    /* Hero cart scaled to 82vh so umbrella is visible and cart fills mobile frame */
+    .eiswagen-container {
+        position: relative;
+        height: 100vh;
+        background-size: auto 82vh !important;
+        background-position: 50% bottom !important;
+        overflow: hidden;
+    }
+
+    /* Whiteboard: smaller, lower down, and further to the right */
+    .whiteboard-overlay {
+        left: auto !important;
+        right: -20px !important;
+        bottom: -16px !important;
+        height: clamp(160px, 26vh, 215px) !important;
+        width: calc(clamp(160px, 26vh, 215px) * 492 / 617) !important;
+        min-height: unset;
+        min-width: unset;
+    }
+
+    .wb-label {
+        font-size: clamp(11px, 1.7vh, 15px);
+        margin-right: 10%;
+    }
+
+    .wb-time {
+        font-size: clamp(11px, 1.7vh, 15px);
+        margin-right: 6%;
+    }
+
+    .wb-event-title {
+        font-size: clamp(14px, 2.3vh, 22px);
+    }
+
+    .wb-location {
+        font-size: clamp(12px, 1.9vh, 18px);
+    }
+}
