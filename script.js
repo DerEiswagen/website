@@ -54,51 +54,244 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================
-       3. Dynamic Live Gig Countdown Timer
+       3. Google Sheets Live Events Integration
        ========================================== */
-    function updateCountdown() {
-        if (!timerDisplay) return; // element may not exist in current layout
+    const GOOGLE_SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2kXVooaxeclIuN_nraihakRFcU_FGNwlfVlFpMQ_7V9SWSsVdUWfe7hnbMMFVe9uT_g6NR-q4qdns/pub?output=csv";
 
-        const now = new Date();
-        
-        // Target is today at 15:00 (3 PM)
-        const target = new Date();
-        target.setHours(15, 0, 0, 0);
+    const eventDateEl = document.getElementById('event-date');
+    const eventTimeEl = document.getElementById('event-time');
+    const eventTitleEl = document.getElementById('event-title');
+    const eventGenresEl = document.getElementById('event-genres');
+    const eventLocationEl = document.getElementById('event-location');
+    const tourListEl = document.getElementById('tour-list');
 
-        // If it's already past 16:00 today, set target to tomorrow 15:00
-        const endOfGig = new Date();
-        endOfGig.setHours(16, 0, 0, 0);
-        if (now > endOfGig) {
-            target.setDate(target.getDate() + 1);
+    function parseCSVLine(line) {
+        const result = [];
+        let cur = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+            const c = line[i];
+            if (c === '"') {
+                if (inQuotes && line[i + 1] === '"') {
+                    cur += '"';
+                    i++;
+                } else {
+                    inQuotes = !inQuotes;
+                }
+            } else if (c === ',' && !inQuotes) {
+                result.push(cur);
+                cur = '';
+            } else {
+                cur += c;
+            }
         }
-
-        let diff = target - now;
-
-        // If gig is currently happening (between 15:00 and 16:00)
-        if (now >= target && now <= endOfGig) {
-            timerDisplay.textContent = "LIVE JETZT!";
-            timerDisplay.style.color = "#ff007f";
-            return;
-        } else {
-            timerDisplay.style.color = "#222222";
-        }
-
-        if (diff < 0) diff = 0;
-
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        const formattedHours = String(hours).padStart(2, '0');
-        const formattedMinutes = String(minutes).padStart(2, '0');
-        const formattedSeconds = String(seconds).padStart(2, '0');
-
-        timerDisplay.textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+        result.push(cur);
+        return result;
     }
 
-    // Run countdown update
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    function parseCSV(text) {
+        const lines = text.trim().split(/\r?\n/);
+        if (lines.length < 2) return [];
+
+        const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+        const dateIdx = headers.findIndex(h => h.includes('date') || h.includes('datum'));
+        const timeIdx = headers.findIndex(h => h.includes('time') || h.includes('zeit') || h.includes('uhrzeit'));
+        const titleIdx = headers.findIndex(h => h.includes('titel') || h.includes('title') || h.includes('name'));
+        const genresIdx = headers.findIndex(h => h.includes('genre') || h.includes('desc') || h.includes('beschreibung'));
+        const locIdx = headers.findIndex(h => (h.includes('location') || h.includes('ort') || h.includes('platz')) && !h.includes('link') && !h.includes('url'));
+        const linkIdx = headers.findIndex(h => h.includes('link') || h.includes('url') || h.includes('map'));
+
+        const events = [];
+        for (let i = 1; i < lines.length; i++) {
+            if (!lines[i].trim()) continue;
+            const row = parseCSVLine(lines[i]);
+            const dateStr = (dateIdx >= 0 && row[dateIdx] ? row[dateIdx] : '').trim();
+            const timeStr = (timeIdx >= 0 && row[timeIdx] ? row[timeIdx] : '').trim();
+            const titleStr = (titleIdx >= 0 && row[titleIdx] ? row[titleIdx] : '').trim();
+            const genresStr = (genresIdx >= 0 && row[genresIdx] ? row[genresIdx] : '').trim();
+            const locStr = (locIdx >= 0 && row[locIdx] ? row[locIdx] : '').trim();
+            const linkStr = (linkIdx >= 0 && row[linkIdx] ? row[linkIdx] : '').trim();
+
+            if (!dateStr && !locStr && !titleStr) continue;
+
+            const { start, end } = parseEventDateTime(dateStr, timeStr);
+
+            events.push({
+                dateStr,
+                time: timeStr || '16:00 - 20:00',
+                title: titleStr || 'Live DJ Set',
+                genres: genresStr,
+                location: locStr || titleStr || 'München',
+                locationLink: linkStr || (locStr ? `https://maps.google.com/?q=${encodeURIComponent(locStr + ' München')}` : 'https://maps.google.com/?q=Muenchen'),
+                start,
+                end
+            });
+        }
+
+        return events;
+    }
+
+    function parseEventDateTime(dateStr, timeStr) {
+        if (!dateStr) {
+            return { start: new Date(8640000000000000), end: new Date(8640000000000000) };
+        }
+
+        let year, month, day;
+        if (dateStr.includes('-')) {
+            const parts = dateStr.split('-');
+            year = parseInt(parts[0], 10);
+            month = parseInt(parts[1], 10) - 1;
+            day = parseInt(parts[2], 10);
+        } else if (dateStr.includes('.')) {
+            const parts = dateStr.split('.');
+            day = parseInt(parts[0], 10);
+            month = parseInt(parts[1], 10) - 1;
+            year = parseInt(parts[2], 10);
+            if (year < 100) year += 2000;
+        } else {
+            const d = new Date(dateStr);
+            if (!isNaN(d.getTime())) {
+                year = d.getFullYear();
+                month = d.getMonth();
+                day = d.getDate();
+            } else {
+                return { start: new Date(8640000000000000), end: new Date(8640000000000000) };
+            }
+        }
+
+        let startH = 12, startM = 0;
+        let endH = 23, endM = 59;
+
+        if (timeStr) {
+            const times = timeStr.match(/(\d{1,2})[:.](\d{2})/g);
+            if (times && times.length >= 1) {
+                const sParts = times[0].replace('.', ':').split(':');
+                startH = parseInt(sParts[0], 10);
+                startM = parseInt(sParts[1], 10);
+
+                if (times.length >= 2) {
+                    const eParts = times[1].replace('.', ':').split(':');
+                    endH = parseInt(eParts[0], 10);
+                    endM = parseInt(eParts[1], 10);
+                } else {
+                    endH = Math.min(23, startH + 3);
+                    endM = startM;
+                }
+            }
+        }
+
+        const start = new Date(year, month, day, startH, startM, 0);
+        const end = new Date(year, month, day, endH, endM, 59);
+        return { start, end };
+    }
+
+    function getEventTag(startDate) {
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const eventDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        const diffDays = Math.round((eventDay - today) / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 0) return 'HEUTE';
+        if (diffDays === 1) return 'MORGEN';
+
+        const weekdays = ['SONNTAG', 'MONTAG', 'DIENSTAG', 'MITTWOCH', 'DONNERSTAG', 'FREITAG', 'SAMSTAG'];
+        if (diffDays > 1 && diffDays < 7) {
+            return weekdays[startDate.getDay()];
+        }
+
+        const d = String(startDate.getDate()).padStart(2, '0');
+        const m = String(startDate.getMonth() + 1).padStart(2, '0');
+        const shortDays = ['SO', 'MO', 'DI', 'MI', 'DO', 'FR', 'SA'];
+        return `${shortDays[startDate.getDay()]}, ${d}.${m}.`;
+    }
+
+    async function loadGoogleSheetEvents() {
+        try {
+            const fetchUrl = `${GOOGLE_SHEETS_CSV_URL}&_nocache=${Date.now()}`;
+            const response = await fetch(fetchUrl);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const csvText = await response.text();
+            const allEvents = parseCSV(csvText);
+
+            if (!allEvents || allEvents.length === 0) return;
+
+            const now = new Date();
+            // Filter upcoming events (where end time is >= current time)
+            let upcoming = allEvents.filter(ev => ev.end >= now);
+
+            // Sort by start date & time ascending
+            upcoming.sort((a, b) => a.start - b.start);
+
+            // If no future events exist, display all events sorted chronologically
+            const displayEvents = upcoming.length > 0 ? upcoming : allEvents.sort((a, b) => a.start - b.start);
+
+            // 1. Update Whiteboard with the next upcoming event
+            const nextEvent = displayEvents[0];
+            if (nextEvent) {
+                if (eventDateEl) {
+                    if (nextEvent.start && !isNaN(nextEvent.start.getTime()) && nextEvent.start.getFullYear() < 3000) {
+                        const d = String(nextEvent.start.getDate()).padStart(2, '0');
+                        const m = String(nextEvent.start.getMonth() + 1).padStart(2, '0');
+                        const y = nextEvent.start.getFullYear();
+                        eventDateEl.textContent = `${d}.${m}.${y}`;
+                    } else {
+                        eventDateEl.textContent = nextEvent.dateStr || '';
+                    }
+                }
+                if (eventTimeEl) eventTimeEl.textContent = nextEvent.time;
+                if (eventTitleEl) eventTitleEl.textContent = nextEvent.title;
+                if (eventGenresEl) eventGenresEl.textContent = nextEvent.genres || '';
+                if (eventLocationEl) {
+                    eventLocationEl.innerHTML = `
+                        ${nextEvent.location}
+                        <svg viewBox="0 0 24 24" class="location-pin">
+                            <path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    `;
+                    if (nextEvent.locationLink) {
+                        eventLocationEl.href = nextEvent.locationLink;
+                    }
+                }
+            }
+
+            // 2. Update Tour Dates in the Menu (Up to 3 upcoming events)
+            if (tourListEl) {
+                const menuEvents = displayEvents.slice(0, 3);
+                tourListEl.innerHTML = menuEvents.map((ev, index) => {
+                    const tag = getEventTag(ev.start);
+                    const isCurrent = index === 0;
+                    const genresHtml = ev.genres ? `<small class="row-desc row-genres">${ev.genres}</small>` : '';
+                    const locHtml = ev.location ? `<small class="row-desc row-loc">${ev.location}</small>` : '';
+
+                    return `
+                        <li>
+                            <a href="${ev.locationLink}" target="_blank" rel="noopener noreferrer" class="vintage-menu-row ${isCurrent ? 'current-stop' : ''}">
+                                <div class="row-left">
+                                    <span class="row-tag">${tag}</span>
+                                    <span class="row-title">${ev.title}</span>
+                                    ${genresHtml}
+                                    ${locHtml}
+                                </div>
+                                <div class="row-dots"></div>
+                                <div class="row-price">${ev.time}</div>
+                            </a>
+                        </li>
+                    `;
+                }).join('');
+            }
+
+        } catch (err) {
+            console.warn('Could not load events from Google Sheet:', err);
+            if (eventTitleEl) eventTitleEl.textContent = 'hier könnte Ihre Werbung stehen';
+            if (eventDateEl) eventDateEl.textContent = '--.--.----';
+            if (eventTimeEl) eventTimeEl.textContent = '--:--';
+            if (eventGenresEl) eventGenresEl.textContent = '';
+            if (eventLocationEl) eventLocationEl.innerHTML = 'München';
+        }
+    }
+
+    // Load events on startup
+    loadGoogleSheetEvents();
 
     /* ==========================================
        4. Booking Form & Notifications

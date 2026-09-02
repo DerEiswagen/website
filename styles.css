@@ -16,7 +16,9 @@
     --text-blue: #2255cc;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -48,13 +50,11 @@ body {
     position: fixed;
     inset: 0;
     z-index: 0;
-    background: repeating-linear-gradient(
-        90deg,
-        var(--stripe-white)   0px,
-        var(--stripe-white)   35px,
-        var(--stripe-cyan)    35px,
-        var(--stripe-cyan)    57px
-    );
+    background: repeating-linear-gradient(90deg,
+            var(--stripe-white) 0px,
+            var(--stripe-white) 35px,
+            var(--stripe-cyan) 35px,
+            var(--stripe-cyan) 57px);
 }
 
 /* Top gradient overlay — above stripes & hero, behind nav/logo/subtitle */
@@ -65,11 +65,9 @@ body {
     right: 0;
     height: 25%;
     z-index: 2;
-    background: linear-gradient(
-        to bottom,
-        #71817E 0%,
-        rgba(208, 222, 206, 0) 100%
-    );
+    background: linear-gradient(to bottom,
+            #71817E 0%,
+            rgba(208, 222, 206, 0) 100%);
     pointer-events: none;
 }
 
@@ -130,12 +128,9 @@ body {
     width: clamp(140px, 19vw, 310px);
     height: auto;
     filter:
-        drop-shadow(0 0 3px #fff)
-        drop-shadow(0 0 12px var(--neon-pink-light))
-        drop-shadow(0 0 25px var(--neon-pink))
-        drop-shadow(0 0 50px var(--neon-pink));
+        drop-shadow(0 0 3px #fff) drop-shadow(0 0 12px var(--neon-pink-light)) drop-shadow(0 0 25px var(--neon-pink)) drop-shadow(0 0 50px var(--neon-pink));
     animation: neon-svg-pulse 6s ease-in-out infinite alternate,
-               neon-flicker 12s linear infinite;
+        neon-flicker 12s linear infinite;
 }
 
 .neon-subtitle {
@@ -159,28 +154,43 @@ body {
 @keyframes neon-svg-pulse {
     0% {
         filter:
-            drop-shadow(0 0 4px rgba(255,255,255,0.9))
-            drop-shadow(0 0 10px rgba(232, 0, 160, 0.5))
-            drop-shadow(0 0 20px rgba(232, 0, 160, 0.35))
-            drop-shadow(0 0 40px rgba(232, 0, 160, 0.2));
+            drop-shadow(0 0 4px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 10px rgba(232, 0, 160, 0.5)) drop-shadow(0 0 20px rgba(232, 0, 160, 0.35)) drop-shadow(0 0 40px rgba(232, 0, 160, 0.2));
     }
+
     100% {
         filter:
-            drop-shadow(0 0 6px rgba(255,255,255,1))
-            drop-shadow(0 0 16px rgba(232, 0, 160, 0.7))
-            drop-shadow(0 0 32px rgba(232, 0, 160, 0.5))
-            drop-shadow(0 0 60px rgba(232, 0, 160, 0.3));
+            drop-shadow(0 0 6px rgba(255, 255, 255, 1)) drop-shadow(0 0 16px rgba(232, 0, 160, 0.7)) drop-shadow(0 0 32px rgba(232, 0, 160, 0.5)) drop-shadow(0 0 60px rgba(232, 0, 160, 0.3));
     }
 }
 
 @keyframes neon-subtitle-pulse {
-    0% { text-shadow: 0 0 4px rgba(219,147,214,0.3), 0 0 10px rgba(219,147,214,0.2); }
-    100% { text-shadow: 0 0 8px rgba(219,147,214,0.6), 0 0 18px rgba(219,147,214,0.4), 0 0 30px rgba(219,147,214,0.2); }
+    0% {
+        text-shadow: 0 0 4px rgba(219, 147, 214, 0.3), 0 0 10px rgba(219, 147, 214, 0.2);
+    }
+
+    100% {
+        text-shadow: 0 0 8px rgba(219, 147, 214, 0.6), 0 0 18px rgba(219, 147, 214, 0.4), 0 0 30px rgba(219, 147, 214, 0.2);
+    }
 }
 
 @keyframes neon-flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-    20%, 24%, 55% { opacity: 0.9; }
+
+    0%,
+    19%,
+    21%,
+    23%,
+    25%,
+    54%,
+    56%,
+    100% {
+        opacity: 1;
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0.9;
+    }
 }
 
 /* ==========================================
@@ -206,13 +216,13 @@ body {
     justify-content: center;
     color: #333;
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .nav-icon-link:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
 }
 
 .nav-icon {
@@ -233,13 +243,13 @@ body {
     align-items: center;
     justify-content: center;
     gap: 5px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .menu-button:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
 }
 
 .bar {
@@ -292,12 +302,14 @@ body {
 /* Text body: positioned right below the header & next to ice cream doodle */
 .whiteboard-body {
     position: absolute;
-    left: 8%;
-    right: 8%;
-    top: 36%;
+    left: 13%;
+    right: 18%;
+    top: 27%;
     bottom: 6%;
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
     justify-content: flex-start;
     gap: 0px;
     overflow: hidden;
@@ -306,50 +318,101 @@ body {
 
 .wb-label {
     font-family: 'Poor Story', cursive;
-    font-size: clamp(16px, 2.7vh, 25px);
+    font-size: clamp(23px, 3.8vh, 38px);
     color: #2f2934;
     font-weight: 400;
+    opacity: 0.88;
+    text-align: right;
     align-self: flex-end;
-    margin-right: 14%;
-    margin-bottom: 2px;
+    margin-right: 4%;
+    margin-bottom: 0px;
+    line-height: 1;
+}
+
+.wb-date-bubble {
+    align-self: flex-end;
+    text-align: right;
+    margin-right: 2%;
+    margin-bottom: -3px;
+}
+
+.wb-date {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: clamp(18px, 3.0vh, 29px);
+    color: #2f2934;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-align: right;
+    opacity: 1;
 }
 
 .wb-time-bubble {
     align-self: flex-end;
-    margin-right: 8%;
-    margin-bottom: 0px;
+    text-align: right;
+    margin-right: 2%;
+    margin-bottom: 1px;
 }
 
 .wb-time {
     font-family: 'Reenie Beanie', cursive;
-    font-size: clamp(16px, 2.6vh, 28px);
+    font-size: clamp(19px, 3.2vh, 32px);
     color: #2f2934;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.04em;
+    text-align: right;
+    opacity: 0.88;
 }
 
 .wb-event-title {
     font-family: 'Reenie Beanie', cursive;
-    font-size: clamp(22px, 3.8vh, 40px);
+    font-size: clamp(22px, 3.7vh, 36px);
     color: #2f2934;
-    font-weight: 600;
+    font-weight: 700;
+    line-height: 1.05;
+    text-align: right;
+    align-self: flex-end;
+    margin-right: 2%;
+    margin-top: 2px;
+    margin-bottom: 0px;
+    transform: rotate(-1deg);
+    opacity: 1;
+}
+
+.wb-genres {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: clamp(16px, 2.5vh, 24px);
+    color: #2f2934;
+    font-weight: 700;
     line-height: 1.1;
-    align-self: center;
-    margin-left: 10%;
-    transform: rotate(-1.5deg);
+    text-align: right;
+    align-self: flex-end;
+    margin-right: 2%;
+    margin-bottom: 1px;
+    transform: rotate(-1deg);
+    opacity: 1;
 }
 
 .wb-location {
     font-family: 'Reenie Beanie', cursive;
-    font-size: clamp(18px, 3.2vh, 34px);
+    font-size: clamp(20px, 3.3vh, 34px);
     color: #2f2934;
+    font-weight: 700;
     text-decoration: none;
-    align-self: center;
-    margin-left: 16%;
-    transform: rotate(-1.5deg);
+    text-align: right;
+    align-self: flex-end;
+    margin-right: 2%;
+    transform: rotate(-1deg);
     display: inline-flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 3px;
+    opacity: 0.88;
+    transition: opacity 0.2s;
+}
+
+.wb-location:hover {
+    color: var(--neon-pink);
+    opacity: 1;
 }
 
 .wb-location:hover {
@@ -357,7 +420,8 @@ body {
 }
 
 .location-pin {
-    display: none; /* Reference image has clean handwritten text */
+    display: none;
+    /* Reference image has clean handwritten text */
 }
 
 /* Countdown — hidden in the main board since not in design */
@@ -384,7 +448,7 @@ body {
     width: min(470px, 95vw);
     height: 100vh;
     background: #eaf6f4;
-    background-image: 
+    background-image:
         radial-gradient(#c6e8e4 12%, transparent 13%),
         radial-gradient(#c6e8e4 12%, transparent 13%);
     background-size: 16px 16px;
@@ -621,6 +685,7 @@ body {
         opacity: 0;
         transform: translateY(6px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -659,7 +724,10 @@ body {
     background: #f7fdfc;
     border: 1px solid #e1f3f1;
     border-radius: 6px;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
 .vintage-menu-row:hover {
@@ -697,9 +765,20 @@ body {
 
 .row-desc {
     font-family: 'Inter', sans-serif;
-    font-size: 11.5px;
+    font-size: 11px;
     color: #6b6470;
-    margin-top: 2px;
+    margin-top: 1px;
+    line-height: 1.25;
+}
+
+.row-genres {
+    color: #379c92;
+    font-weight: 600;
+}
+
+.row-loc {
+    color: #554e5a;
+    font-weight: 500;
 }
 
 .row-dots {
@@ -876,17 +955,20 @@ body {
     font-size: 13px;
     font-weight: 600;
     z-index: 200;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
     transition: bottom 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     white-space: nowrap;
 }
 
-.toast.show { bottom: 28px; }
+.toast.show {
+    bottom: 28px;
+}
 
 /* ==========================================
    9. Responsive — Mobile
    ========================================== */
 @media (max-width: 640px) {
+
     html,
     body {
         overflow: hidden !important;

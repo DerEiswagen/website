@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Der Eiswagen — Serving Cold Beats</title>
+    <title>Der Eiswagen</title>
     <meta name="description" content="Der Eiswagen bringt kühle Beats direkt auf die Straße. Finde unsere nächsten Tour-Termine und höre unsere DJ-Sets.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,17 +73,16 @@
 
                 <div class="whiteboard-body">
                     <p class="wb-label">next up:</p>
-                    <div class="wb-time-bubble">
-                        <span class="wb-time" id="event-time">15:00. - 16:00</span>
+                    <div class="wb-date-bubble">
+                        <span class="wb-date" id="event-date">--.--.----</span>
                     </div>
-                    <h2 class="wb-event-title" id="event-title">Guerilla Cypher</h2>
-                    <a href="https://maps.google.com/?q=Brudermuehlbruecke+Muenchen"
-                       target="_blank" rel="noopener noreferrer"
-                       class="wb-location" id="event-location">
-                        Brudermühlbrücke
-                        <svg viewBox="0 0 24 24" class="location-pin">
-                            <path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
+                    <div class="wb-time-bubble">
+                        <span class="wb-time" id="event-time">--:--</span>
+                    </div>
+                    <h2 class="wb-event-title" id="event-title">hier könnte Ihre Werbung stehen</h2>
+                    <p class="wb-genres" id="event-genres"></p>
+                    <a href="#section-booking" class="wb-location" id="event-location">
+                        München
                     </a>
                 </div>
             </section>
@@ -155,7 +154,7 @@
                 <section class="menu-section active-section" id="section-about">
                     <h4 class="vintage-section-heading">Über Der Eiswagen</h4>
                     <div class="vintage-about-card">
-                        <p>Wer sagt, dass ein Eiswagen nur Eis verkaufen darf? Wir haben unseren traditionellen Eiswagen in eine mobile DJ-Kabine umgebaut — ausgestattet mit Turntables, Lautsprechern und bestem handgemachtem Eis.</p>
+                        <p>Wer sagt, dass ein Eiswagen nur Eis verkaufen darf? Wir haben unseren Eiswagen von Grund auf selbst gebaut und in eine mobile DJ-Kabine verwandelt — ausgestattet mit Turntables, Lautsprechern und bestem handgemachtem Eis.</p>
                         <p>Wir touren durch München und servieren die coolsten Beats und erfrischendsten Flavours der Stadt.</p>
                         
                         <div class="vintage-social-box">
@@ -177,33 +176,16 @@
                 <!-- Tour Dates -->
                 <section class="menu-section" id="section-tour">
                     <h4 class="vintage-section-heading">Kommende Stopps</h4>
-                    <ul class="vintage-menu-list">
+                    <ul class="vintage-menu-list" id="tour-list">
                         <li class="vintage-menu-row current-stop">
                             <div class="row-left">
-                                <span class="row-tag">HEUTE</span>
-                                <span class="row-title">Brudermühlbrücke</span>
-                                <small class="row-desc">Guerilla Cypher (Live DJ Set &amp; Eis)</small>
+                                <span class="row-tag">INFO</span>
+                                <span class="row-title">hier könnte Ihre Werbung stehen</span>
+                                <small class="row-desc row-genres">DJ Set &amp; Eis</small>
+                                <small class="row-desc row-loc">München</small>
                             </div>
                             <div class="row-dots"></div>
-                            <div class="row-price">15:00 - 16:00</div>
-                        </li>
-                        <li class="vintage-menu-row">
-                            <div class="row-left">
-                                <span class="row-tag">MORGEN</span>
-                                <span class="row-title">Isarauen</span>
-                                <small class="row-desc">Sunset Sessions (Reichenbachbrücke)</small>
-                            </div>
-                            <div class="row-dots"></div>
-                            <div class="row-price">18:00 - 21:00</div>
-                        </li>
-                        <li class="vintage-menu-row">
-                            <div class="row-left">
-                                <span class="row-tag">SAMSTAG</span>
-                                <span class="row-title">Flaucher</span>
-                                <small class="row-desc">Chill &amp; Ice Cream Bash</small>
-                            </div>
-                            <div class="row-dots"></div>
-                            <div class="row-price">14:00 - 18:00</div>
+                            <div class="row-price">Jetzt anfragen</div>
                         </li>
                     </ul>
                 </section>
@@ -235,6 +217,6 @@
     <!-- Toast Notification -->
     <div class="toast" id="toast-message"></div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
 </body>
 </html>
