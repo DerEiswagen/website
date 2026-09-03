@@ -250,6 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                     if (nextEvent.locationLink) {
                         eventLocationEl.href = nextEvent.locationLink;
+                        eventLocationEl.target = '_blank';
+                        eventLocationEl.rel = 'noopener noreferrer';
                     }
                 }
             }
@@ -260,20 +262,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 tourListEl.innerHTML = menuEvents.map((ev, index) => {
                     const tag = getEventTag(ev.start);
                     const isCurrent = index === 0;
-                    const genresHtml = ev.genres ? `<small class="row-desc row-genres">${ev.genres}</small>` : '';
-                    const locHtml = ev.location ? `<small class="row-desc row-loc">${ev.location}</small>` : '';
+                    const isToday = tag === 'HEUTE';
+                    const isTomorrow = tag === 'MORGEN';
+                    const stampText = isToday ? 'HEUTE LIVE' : (isTomorrow ? 'MORGEN' : (isCurrent ? 'NÄCHSTER STOPP' : ''));
+                    const stampHtml = stampText ? `<span class="tour-stamp">${stampText}</span>` : '';
+                    const genresHtml = ev.genres ? `<span class="tour-genre-pill">${ev.genres}</span>` : '';
+                    const locHtml = ev.location ? `
+                        <span class="tour-location-text">
+                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                                <circle cx="12" cy="9" r="2.5"/>
+                            </svg>
+                            ${ev.location}
+                        </span>
+                    ` : '';
 
                     return `
                         <li>
-                            <a href="${ev.locationLink}" target="_blank" rel="noopener noreferrer" class="vintage-menu-row ${isCurrent ? 'current-stop' : ''}">
-                                <div class="row-left">
-                                    <span class="row-tag">${tag}</span>
-                                    <span class="row-title">${ev.title}</span>
-                                    ${genresHtml}
-                                    ${locHtml}
+                            <a href="${ev.locationLink}" target="_blank" rel="noopener noreferrer" class="vintage-tour-card ${isCurrent ? 'featured-stop' : ''}">
+                                ${stampHtml}
+                                <div class="tour-card-header">
+                                    <div class="tour-date-badge">
+                                        <span>${tag}</span>
+                                    </div>
+                                    <div class="tour-time-badge">
+                                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <polyline points="12 6 12 12 16 14"/>
+                                        </svg>
+                                        <span>${ev.time}</span>
+                                    </div>
                                 </div>
-                                <div class="row-dots"></div>
-                                <div class="row-price">${ev.time}</div>
+                                <div class="tour-card-body">
+                                    <h4 class="tour-card-title">${ev.title}</h4>
+                                    <div class="tour-card-meta">
+                                        ${genresHtml}
+                                        ${locHtml}
+                                    </div>
+                                </div>
+                                <div class="tour-card-footer">
+                                    <span class="tour-map-action">Route auf Maps ↗</span>
+                                </div>
                             </a>
                         </li>
                     `;

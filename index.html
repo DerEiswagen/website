@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,400;1,700&family=Poiret+One&family=Poor+Story&family=Reenie+Beanie&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
 
@@ -76,12 +76,12 @@
                     <div class="wb-date-bubble">
                         <span class="wb-date" id="event-date">--.--.----</span>
                     </div>
+                    <h2 class="wb-event-title" id="event-title">hier könnte Ihre Werbung stehen</h2>
                     <div class="wb-time-bubble">
                         <span class="wb-time" id="event-time">--:--</span>
                     </div>
-                    <h2 class="wb-event-title" id="event-title">hier könnte Ihre Werbung stehen</h2>
                     <p class="wb-genres" id="event-genres"></p>
-                    <a href="#section-booking" class="wb-location" id="event-location">
+                    <a href="#section-booking" class="wb-location" id="event-location" target="_blank" rel="noopener noreferrer">
                         München
                     </a>
                 </div>
@@ -90,9 +90,9 @@
         </main>
     </div>
 
-        <!-- Vintage Ice Cream Parlor Menu Drawer -->
+    <!-- Vintage Ice Cream Parlor Menu Drawer -->
     <div class="sidebar-drawer vintage-parlor-drawer" id="sidebar-menu">
-                <button class="close-drawer" id="close-menu" aria-label="Menü schließen">
+        <button class="close-drawer" id="close-menu" aria-label="Menü schließen">
             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -136,7 +136,7 @@
                 </div>
             </div>
 
-                        <!-- Vintage Navigation -->
+            <!-- Vintage Navigation -->
             <nav class="drawer-nav vintage-nav">
                 <ul>
                     <li><button class="nav-item active" data-section="about">Über uns</button></li>
@@ -150,7 +150,7 @@
             </div>
 
             <div class="drawer-section-display">
-                                                <!-- About (Selected by default) -->
+                <!-- About (Selected by default) -->
                 <section class="menu-section active-section" id="section-about">
                     <h4 class="vintage-section-heading">Über Der Eiswagen</h4>
                     <div class="vintage-about-card">
@@ -177,15 +177,32 @@
                 <section class="menu-section" id="section-tour">
                     <h4 class="vintage-section-heading">Kommende Stopps</h4>
                     <ul class="vintage-menu-list" id="tour-list">
-                        <li class="vintage-menu-row current-stop">
-                            <div class="row-left">
-                                <span class="row-tag">INFO</span>
-                                <span class="row-title">hier könnte Ihre Werbung stehen</span>
-                                <small class="row-desc row-genres">DJ Set &amp; Eis</small>
-                                <small class="row-desc row-loc">München</small>
-                            </div>
-                            <div class="row-dots"></div>
-                            <div class="row-price">Jetzt anfragen</div>
+                        <li>
+                            <a href="#section-booking" class="vintage-tour-card featured-stop">
+                                <span class="tour-stamp">NÄCHSTER STOPP</span>
+                                <div class="tour-card-header">
+                                    <div class="tour-date-badge">
+                                        <span>INFO</span>
+                                    </div>
+                                    <div class="tour-time-badge">
+                                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <polyline points="12 6 12 12 16 14"/>
+                                        </svg>
+                                        <span>Jetzt anfragen</span>
+                                    </div>
+                                </div>
+                                <div class="tour-card-body">
+                                    <h4 class="tour-card-title">hier könnte Ihre Werbung stehen</h4>
+                                    <div class="tour-card-meta">
+                                        <span class="tour-genre-pill">DJ Set &amp; Eis</span>
+                                        <span class="tour-location-text">München</span>
+                                    </div>
+                                </div>
+                                <div class="tour-card-footer">
+                                    <span class="tour-map-action">Event buchen ↗</span>
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </section>
@@ -194,29 +211,62 @@
                 <section class="menu-section" id="section-booking">
                     <h4 class="vintage-section-heading">Hol uns zu deinem Event</h4>
                     <p class="vintage-section-sub">Für Firmenfeiern, Street Festivals &amp; Partys.</p>
-                    <form class="contact-form vintage-form" id="booking-form">
-                        <div class="form-group">
-                            <label for="name">Dein Name</label>
-                            <input type="text" id="name" required placeholder="z.B. DJ Vanille">
+                    <div class="vintage-booking-card wip-card">
+                        
+                        <!-- Work In Progress Overlay -->
+                        <div class="wip-overlay">
+                            <div class="wip-badge">
+                                <span class="wip-badge-title">★ WORK IN PROGRESS ★</span>
+                                <p class="wip-badge-sub">Buchungsformular in Arbeit</p>
+                                <p class="wip-badge-hint">Anfragen aktuell gerne via:</p>
+                                <div class="wip-actions">
+                                    <a href="https://instagram.com/dereiswagen" target="_blank" rel="noopener noreferrer" class="wip-btn">Instagram ↗</a>
+                                    <a href="https://t.me/dereiswagen" target="_blank" rel="noopener noreferrer" class="wip-btn">Telegram ↗</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="email">E-Mail Adresse</label>
-                            <input type="email" id="email" required placeholder="z.B. scoop@coldbeats.de">
+
+                        <div class="booking-card-header">
+                            <div class="tour-date-badge booking-badge">
+                                <span>EVENT-ANFRAGE</span>
+                            </div>
+                            <div class="tour-time-badge">
+                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                    <polyline points="22,6 12,13 2,6"/>
+                                </svg>
+                                <span>Direktkontakt</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="message">Event-Details</label>
-                            <textarea id="message" required rows="2" placeholder="Datum, Ort, Gäste..."></textarea>
-                        </div>
-                        <button type="submit" class="submit-form-btn vintage-submit-btn">Anfrage abschicken</button>
-                    </form>
+                        <form class="contact-form vintage-form" id="booking-form">
+                            <div class="form-group">
+                                <label for="name">Dein Name</label>
+                                <input type="text" id="name" disabled placeholder="z.B. DJ Vanille">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-Mail Adresse</label>
+                                <input type="email" id="email" disabled placeholder="z.B. scoop@coldbeats.de">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Nachricht &amp; Wunschtermin</label>
+                                <textarea id="message" rows="3" disabled placeholder="Datum, Ort, Gästeanzahl &amp; Beat-Wünsche..."></textarea>
+                            </div>
+                            <button type="button" class="vintage-submit-btn" disabled>
+                                <span>Anfrage senden</span>
+                                <span class="btn-arrow">→</span>
+                            </button>
+                        </form>
+                    </div>
                 </section>
+
             </div>
         </div>
     </div>
 
     <!-- Toast Notification -->
-    <div class="toast" id="toast-message"></div>
+    <div class="toast" id="toast-message">Nachricht erfolgreich gesendet! 🍦</div>
 
-    <script src="script.js?v=2"></script>
+    <!-- Logic -->
+    <script src="script.js?v=3"></script>
 </body>
 </html>
